@@ -1,19 +1,20 @@
 const passport = require('passport');
-const User = require('../models/user-model');
+const User = require('../models/user-model.js');
 
-//serialize save only the id of the user document in the session
-passport.serializeUser(() => {
-  cb(null, loggedInUser._id);
-})
 
-//deserialize: retrieve the ful user details from the database using the id
-//(the user is stored un the session)
-passport.deserializeUser(() => {
-  User.findById(userIdFromSession, (err, userDocument) => {
-    if (err) {
-      cb(err);
-      return;
-    }
-    cb(null, userDocument);
-  })
-})
+//SerializeUser: is saving only the ID in the session
+  passport.serializeUser((loginUser, cb) => {
+    cb(null, loginUser._id);
+  });
+
+
+//retrieve full user details from DB using id, where all info is stored during session
+  passport.deserializeUser((userIdFromSession, cb) => {
+    User.findById(userIdFromSession, (err, userDocument) => {
+      if (err) {
+        cb(err);
+        return
+      }
+      cb(null, userDocument);
+    });
+  });

@@ -2,12 +2,12 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session')
 const authRoutes = require('./routes/auth-routes');
-
+const mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -32,7 +32,8 @@ app.use(
   session({
     secret: 'string is to avoid a warning',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie : { httpOnly: true, maxAge: 2419200000 }
   })
 );
 
@@ -45,6 +46,10 @@ app.use(passport.session());
 app.use('/', index);
 app.use('/users', users);
 app.use('/', authRoutes);
+
+app.use((req, res, next) => {
+  res.sendfile(__dirname + '/public/index.html');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
