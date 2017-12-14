@@ -15,7 +15,7 @@ router.post('/signup', (req, res, next) =>{
     //see if the username is already taken (query the database)
     User.findOne({ username: username }, '_id', (err, foundUser)=>{
     if(foundUser) {
-      res.status(400).json({message: 'The username alread exists mothafucka'});
+      res.status(400).json({message: 'The username already exists!'});
       return;
     }
     //save to the DB if we didn't find the user

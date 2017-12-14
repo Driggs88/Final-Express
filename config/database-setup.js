@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const dbName = 'angular-auth';
+const dbName = 'travel-zone';
 
 mongoose.connect(`mongodb://localhost/${dbName}` , { useMongoClient: true }); //fixes Deprecation Warning
 
