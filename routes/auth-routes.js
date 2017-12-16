@@ -2,10 +2,13 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/user-model');
 
-const router = express.Router();
+const authRouter = express.Router();
 
-router.post('/signup', (req, res, next) =>{
+authRouter.post('/signup', (req, res, next) =>{
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
   const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
  if(!username || !password) {
@@ -21,10 +24,17 @@ router.post('/signup', (req, res, next) =>{
     //save to the DB if we didn't find the user
     const salt = bcrypt.genSaltSync(10);
     const hashPass= bcrypt.hashSync(password, salt);
+
+    //create User
     const theUser = new User({
+      firstName: firstName,
+      lastName: lastName,
       username: username,
-      password: hashPass
+      email: email,
+      password: hashPass,
     })
+
+    //save User
     theUser.save((err) => {
         if(err) {
             res.stataus(500).json({message: 'Something went wrong'});
@@ -37,7 +47,7 @@ router.post('/signup', (req, res, next) =>{
   });//User.findOne
 });//GET SIGNUP ROUTE
 
- router.post('/login', (req, res, next) => {
+ authRouter.post('/login', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
 
@@ -63,12 +73,12 @@ router.post('/signup', (req, res, next) =>{
     })//User.findOne()
   }) //POST/login
 
-router.post('/logout', (req, res, next) => {
+authRouter.post('/logout', (req, res, next) => {
   req.logout();
   res.status(200).json({message: 'Success'});
 });
 
-router.get('/loggedin', (req, res, next) => {
+authRouter.get('/loggedin', (req, res, next) => {
   if (req.isAuthenticated()) {
     res.status(200).json(req.user);
     return;
@@ -76,7 +86,7 @@ router.get('/loggedin', (req, res, next) => {
   res.status(403).json({message: 'Unauthorized'})
 });
 
-router.get('/private', (req, res, next) => {
+authRouter.get('/private', (req, res, next) => {
   if (req.isAuthenticated()) {
     res.status(200).json({message: 'This is a private message'})
     return;

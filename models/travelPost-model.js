@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require('./user');
+const moment = require('moment');
 
 
 const travelPostSchema = new Schema(
@@ -15,14 +16,9 @@ const travelPostSchema = new Schema(
     location: { type: String},
   });
 
-  requestJobSchema.virtual('inputFormattedDate').get(function(){
-    return moment(this.deadline).format('YYYY-MM-DD');
-  });
-
-  requestJobSchema.methods.belongsTo = function(user){
+  travelPostSchema.methods.belongsTo = function(user){
     return this._creator.equals(user._id);
-  }  
-
+  }
 
 const TravelPost = mongoose.model("TravelPost", travelPostSchema);
 module.exports = TravelPost;
