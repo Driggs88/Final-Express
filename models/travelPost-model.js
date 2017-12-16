@@ -11,7 +11,7 @@ const travelPostSchema = new Schema(
     description: { type: String, required: true },
     likes: { type: Number },
     //array of user id that liked the post
-    users: [],
+    likedUsers: { type: Array, default: [] },
     travelPhotos: { type: String},
     location: { type: String},
   });
