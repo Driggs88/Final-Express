@@ -1,6 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/user-model');
+const multer    = require('multer');
+const upload = multer({ dest: 'public/uploads/' });
 
 const authRouter = express.Router();
 
