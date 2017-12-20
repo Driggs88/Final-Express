@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
-  {
-    userName: { type: String},
+const userSchema = new Schema({
+
+    username: { type: String},
     firstName: { type: String },
-    lastName: { type: String},
+    lastName: {
+      type: String,
       required: [true, "User is required"]
     },
     email: { type: String},
@@ -13,9 +14,8 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"]
     },
-    {
-      profilePic: String,
-    },
+    profilePic: { type: String},
+
   },
   //Schema constructor setting
   {
@@ -24,6 +24,7 @@ const userSchema = new Schema(
       updatedAt: "dateUpdated"
     }
   }
+
 );
 
 const User = mongoose.model("User", userSchema);

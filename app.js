@@ -8,6 +8,7 @@ const passport = require('passport');
 const session = require('express-session')
 const authRoutes = require('./routes/auth-routes');
 const mongoose = require('mongoose');
+var cors = require('cors');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -16,6 +17,7 @@ require('./config/database-setup');
 require('./config/passport-setup')
 
 var app = express();
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

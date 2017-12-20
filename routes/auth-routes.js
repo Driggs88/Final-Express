@@ -7,6 +7,7 @@ const upload = multer({ dest: 'public/uploads/' });
 const authRouter = express.Router();
 
 authRouter.post('/signup', (req, res, next) =>{
+  const profilePic = `/uploads/${req.file.filename}`;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const username = req.body.username;
@@ -29,6 +30,7 @@ authRouter.post('/signup', (req, res, next) =>{
 
     //create User
     const theUser = new User({
+      profilePic: profilePic,
       firstName: firstName,
       lastName: lastName,
       username: username,
@@ -97,4 +99,4 @@ authRouter.get('/private', (req, res, next) => {
 });
 
 
-module.exports = router;
+module.exports = authRouter;
