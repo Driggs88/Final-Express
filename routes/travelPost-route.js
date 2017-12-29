@@ -1,22 +1,26 @@
 const express = require('express');
-const router  = express.Router();
-const multer    = require('multer');
-const passport = require("passport");
-const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
-const upload = multer({ dest: 'public/uploads/' });
+const multer = require('multer');
+
+
 const TravelPost = require('../models/travelPost-model');
 
-router.get('/post/new', ensureLoggedIn(), (req, res) => {
-    res.render('post/newpost', { types: TYPES });
-});
+const router  = express.Router();
 
-router.post('/post/new', ensureLoggedIn(), upload.single('photo'), (req, res) => {
+const myUpload = multer({
+  dest: __dirname + '/../public/uploads/' });
 
-    const post = new TravelPost ({
-      _creator: req.user._id,
-      title: req.body.title,
-      description: req.body.description,
-      travelPhotos: `/uploads/${req.file.filename}`,
+
+router.post('/api/travelPost', myUpload.single('travelPhoto'), (req, res, next) => {
+  if (!req.user) {
+    res.status(401).json({ message: 'Log in to make a travel post' });
+    return;
+  }
+
+    const theTravelPost = new TravelPostModel ({
+      title: req.body.postTitle,
+      description: req.body.postDescription,
+      likes: req.body.postLikes,
+      user: req.user._id
     })
     post.save((err, newpost) => {
       if (err) {

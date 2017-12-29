@@ -39,7 +39,7 @@ UserModel.findOne(
         fullName: req.body.signupFullName,
         email: req.body.signupEmail,
         encryptedPassword: scramblePassword
-      }),
+      });
 
       theUser.save((err) => {
         if (err) {
@@ -85,7 +85,7 @@ authRouter.post('/api/login', (req, res, next) => {
         // Login successful, save them in the session
         req.login(theUser, (err) => {
           if (err) {
-            res..status(500).json({ message: 'Session failed to save'});
+            res.status(500).json({ message: 'Session failed to save'});
             return;
           }
 

@@ -1,30 +1,29 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-
-    username: { type: String},
-    firstName: { type: String },
-    lastName: {
-      type: String,
-      required: [true, "User is required"]
-    },
-    email: { type: String},
-    password: {
-      type: String,
-      required: [true, "Password is required"]
-    },
-    profilePic: { type: String},
-
-  },
-  //Schema constructor setting
+const userSchema = new Schema(
   {
-    timestamps: {
-      createdAt: "dateAdded",
-      updatedAt: "dateUpdated"
-    }
-  }
+    fullName: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true
+    },
+    encryptedPassword: {
+      type: String,
+      required: true
+    },
+  //   profilePic: {
+  //     type: String},
+  // },
 
+  //Schema constructor setting
+  // {
+  //   timestamps: true
+  //   }
+  }
 );
 
 const User = mongoose.model("User", userSchema);
