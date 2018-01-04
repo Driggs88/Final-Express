@@ -1,20 +1,27 @@
 const passport = require('passport');
-const User = require('../models/user-model.js');
+const bcrypt = require('bcrypt');
+const LocalStrategy = require('passport-local').Strategy;
+
+const UserModel = require('../models/user-model');
 
 
-//SerializeUser: is saving only the ID in the session
-  passport.serializeUser((loginUser, cb) => {
-    cb(null, loginUser._id);
+// Save the user's ID in the bowl (called when user logs in)
+  passport.serializeUser((userFromDb, next) => {
+    next(null, userFromDb._id);
   });
 
 
-//retrieve full user details from DB using id, where all info is stored during session
-  passport.deserializeUser((userIdFromSession, cb) => {
-    User.findById(userIdFromSession, (err, userDocument) => {
+// Retrieve full user details from DB using id saved in the bowl
+  passport.deserializeUser((idFromBowl, next) => {
+    UserModel.findById(
+      idFromBowl,
+      (err, userFromDb) => {
       if (err) {
-        cb(err);
+        next(err);
         return
       }
-      cb(null, userDocument);
-    });
-  });
+
+      next(null, userFromDb);
+    }
+  );
+});

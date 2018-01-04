@@ -44,7 +44,7 @@ app.use(cors({
 const myAuthRoutes = require('./routes/auth-routes');
 app.use('/', myAuthRoutes);
 
-const myCamelRoutes = require('./routes/travelPost-route');
+const myTravelPostRoutes = require('./routes/travelPost-route');
 app.use('/', myTravelPostRoutes);
 
 

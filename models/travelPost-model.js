@@ -29,13 +29,14 @@ const travelPostSchema = new Schema(
       required: true,
       ref: 'User' // "ref" is the string name of a model that the ID refers to
     },            // you NEED "ref" to use "populate()"
-    travelPhotos: { type: String }
+    travelPhotos: { type: String },
+      location: { type: String},
   },
-  location: { type: String},
+
   {
     timestamps: true
   }
-);  
+);
 
   // travelPostSchema.methods.belongsTo = function(user){
   //   return this._creator.equals(user._id);
