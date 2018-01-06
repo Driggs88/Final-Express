@@ -25,3 +25,35 @@ const UserModel = require('../models/user-model');
     }
   );
 });
+
+
+passport.use(new LocalStrategy (
+  {
+    usernameField: 'enterEmail',
+    passwordField: 'enterPassword'
+  },
+  (theEmail, thePassword, next) => {
+
+      UserModel.findOne(
+        { email: theEmail },
+        (err, userFromDb) => {
+          if (err) {
+            next(err);
+            return;
+          }
+
+          if (userFromDb === null) {
+            next(null, false, { message: 'Incorrect email' });
+            return;
+          }
+
+          if (bcrypt.compareSync(thePassword, userFromDb.encryptedPassword) === false) {
+            next(null, false, { message: 'Incorrect password' });
+            return;
+          }
+
+          next(null, userFromDb);
+        }
+      );
+  }
+));
