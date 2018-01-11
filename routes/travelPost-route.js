@@ -16,7 +16,7 @@ router.post('/api/travelPost', myUpload.single('travelPicture'), (req, res, next
     return;
   }
 
-    const theTravelPost = new TravelPostModel ({
+    const theTravelPost = new TravelPost ({
       title: req.body.postTitle,
       description: req.body.postDescription,
       likes: req.body.postLikes,
@@ -37,8 +37,8 @@ router.post('/api/travelPost', myUpload.single('travelPicture'), (req, res, next
       // Validation error
       if (err && theTravelPost.errors) {
         res.status(400).json({
-          titleError: theTravelPost.error.postTitle,
-          descriptionError: theTravelPost.error.postDescription
+          titleError: theTravelPost.error.title,
+          descriptionError: theTravelPost.error.description
         });
         return;
       }

@@ -5,7 +5,7 @@ const multer    = require('multer');
 const upload = multer({ dest: 'public/uploads/' });
 
 
-const User = require('../models/user-model');
+const UserModel = require('../models/user-model');
 
 
 const authRouter = express.Router();
@@ -76,6 +76,7 @@ authRouter.post('/api/login', (req, res, next) => {
         }
 
         // Login failed if theUser is empty
+        console.log('MY USER = ', theUser);
         if (!theUser) {
           // "extraInfo" contains feedback message from LocalStrategy
           res.status(401).json(extraInfo);
@@ -114,9 +115,8 @@ authRouter.get('/api/checklogin', (req, res, next) => {
     return;
   }
 
-
   // Clears encryptedPassword before sending from the object not database
-  theUser.encryptedPassword = undefined;
+  req.user.encryptedPassword = undefined;
 
   res.status(200).json(req.user);
 });

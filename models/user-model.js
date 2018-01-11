@@ -15,14 +15,13 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
+  },
+
   //   profilePic: {
   //     type: String},
   // },
-
-  //Schema constructor setting
-  // {
-  //   timestamps: true
-  //   }
+  {
+    timestamps: true
   }
 );
 
