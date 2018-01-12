@@ -34,14 +34,14 @@ router.post('/api/travelPost', myUpload.single('travelPicture'), (req, res, next
         return;
       }
 
-      // Validation error
-      if (err && theTravelPost.errors) {
-        res.status(400).json({
-          titleError: theTravelPost.error.title,
-          descriptionError: theTravelPost.error.description
-        });
-        return;
-      }
+      // // Validation error
+      // if (err && theTravelPost.errors) {
+      //   res.status(400).json({
+      //     titleError: theTravelPost.error.title,
+      //     descriptionError: theTravelPost.error.description
+      //   });
+      //   return;
+      // }
 
       req.user.encryptedPassword = undefined;
       theTravelPost.user = req.user;
