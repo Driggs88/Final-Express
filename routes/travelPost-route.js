@@ -24,7 +24,7 @@ router.post('/api/travelPost', myUpload.single('travelPicture'), (req, res, next
     });
 
     if (req.file) {
-      theTravelPost.picture = '/uploads/' + req.file.filename;
+      theTravelPost.travelPhotos = '/uploads/' + req.file.filename;
     }
 
     theTravelPost.save((err) => {
