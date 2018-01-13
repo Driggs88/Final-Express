@@ -1,5 +1,8 @@
 const express = require('express');
 const multer = require('multer');
+const mongoose     = require('mongoose');
+
+
 
 
 const TravelPost = require('../models/travelPost-model');
@@ -94,13 +97,22 @@ router.get('/api/travelPost', (req, res, next) => {
 //     return res.redirect(`/`);
 //   });
 // });
-// router.post('/:id/delete', (req, res, next) => {
-//   TravelPost.findByIdAndRemove(req.params.id, (err, post) => {
-//     if (err) {
-//       return next(err);
-//     }
-//     return res.redirect('/');
-//   })
-// })
+router.delete('/api/travelPost/:id', (req, res) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+
+  TravelPost.remove({ _id: req.params.id }, (err) => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+
+    return res.json({
+      message: 'Travel post has been deleted!'
+    });
+  })
+});
 
 module.exports = router;
