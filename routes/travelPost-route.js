@@ -17,8 +17,8 @@ router.post('/api/travelPost', myUpload.single('travelPicture'), (req, res, next
   }
 
     const theTravelPost = new TravelPost ({
-      title: req.body.postTitle,
-      description: req.body.postDescription,
+      title: req.body.travelTitle,
+      description: req.body.travelDescription,
       likes: req.body.postLikes,
       user: req.user._id
     });
@@ -68,7 +68,7 @@ router.get('/api/travelPost', (req, res, next) => {
         res.status(500).json({ message: 'Failed to edit post' });
         return;
       }
-
+      console.log(allTheTravelPost);
       res.status(200).json(allTheTravelPost);
     });
 });
