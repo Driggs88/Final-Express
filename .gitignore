@@ -31,3 +31,6 @@ npm-debug.log
 
 #Node Dependency
 node_modules
+
+# env
+env
